@@ -1,0 +1,43 @@
+import { Select } from "antd";
+import { ErrorMessage, Field } from "formik";
+interface TextFieldType {
+  name: string;
+  label?: string;
+  style?: string;
+  flexDirection?: "vertical" | "horizontal";
+  labelClassName?: string;
+  children: any;
+}
+function SelectField(props: any) {
+  const {
+    label,
+    name,
+    flexDirection,
+    labelClassName = "",
+    children,
+  }: TextFieldType = props;
+  return (
+    <div className={flexDirection === "horizontal" ? `grid grid-cols-3` : ""}>
+      {label && (
+        <div className={`my-2 ${labelClassName}`}>
+          <label>{label}</label>
+        </div>
+      )}
+      <div className="w-full col-span-2">
+        <Field
+          name={name}
+          {...props}
+          as={Select}
+          className="w-full border px-4 py-2 rounded-md focus:outline-none"
+        >
+          {children}
+        </Field>
+        <div className="text-red-500 text-xs mt-1 ">
+          {name && <ErrorMessage name={name} />}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default SelectField;
